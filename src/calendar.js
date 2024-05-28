@@ -1,4 +1,4 @@
-import { openModal } from './eventModal.js';
+import { openEventModal, renderEvents } from './events.js';
 
 const calendarEl = document.getElementById('calendar');
 const currentMonthEl = document.getElementById('currentMonth');
@@ -8,9 +8,8 @@ const nextMonthBtn = document.getElementById('nextMonth');
 const selectedDate = new Date();
 
 const renderCalendar = () => {
-    const events = JSON.parse(localStorage.getItem('events')) || {};
-
     calendarEl.innerHTML = '';
+
     const today = new Date();
     const year = selectedDate.getFullYear();
     const month = selectedDate.getMonth();
@@ -43,38 +42,12 @@ const renderCalendar = () => {
         }
 
         const dayKey = `${day}.${month + 1}.${year}`;
-        const dayEvents = events[dayKey] || [];
-        for (const event of dayEvents) {
-            const eventEl = document.createElement('div');
-            eventEl.classList.add('event');
-            eventEl.innerHTML = `<span class="event-time">${
-                event.time ? `${event.time}` : ''
-            }</span><span class="event-description">${
-                event.description
-            }</span>`;
-            dayEl.appendChild(eventEl);
+        dayEl.dataset.key = dayKey;
+        renderEvents(dayEl);
 
-            eventEl.addEventListener('click', () => {
-                const date = dayKey;
-                const description = event.description;
-                const time = event.time;
-
-                events[date] = events[date].filter(
-                    event =>
-                        event.description !== description || event.time !== time
-                );
-                if (events[date].length === 0) {
-                    delete events[date];
-                }
-
-                localStorage.setItem('events', JSON.stringify(events));
-                renderCalendar();
-            });
-        }
-
-        dayEl.addEventListener('click', el => {
-            if (el.target === dayEl) {
-                openModal(dayKey);
+        dayEl.addEventListener('click', element => {
+            if (element.target === dayEl) {
+                openEventModal(dayEl);
             }
         });
     }
@@ -91,5 +64,3 @@ nextMonthBtn.addEventListener('click', () => {
 });
 
 renderCalendar();
-
-export { renderCalendar };
