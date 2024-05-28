@@ -1,5 +1,5 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Trebuchet MS', sans-serif;
     background-color: #f9f9f9;
     display: flex;
     margin: 5px;
@@ -35,10 +35,10 @@ hr {
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s;
-    margin: 5px 0;
+    margin: 5px;
 }
 .header button:hover {
-    background-color: #004696;
+    background-color: #0f529e;
 }
 .weekdays {
     display: grid;
@@ -65,21 +65,21 @@ hr {
 .day:hover {
     background-color: #dcefff;
 }
-.day::-webkit-scrollbar {
+.current-day {
+    background-color: #bee2ff;
+}
+::-webkit-scrollbar {
     width: 8px;
 }
-.day::-webkit-scrollbar-track {
+::-webkit-scrollbar-track {
     background: #f1f1f1;
 }
-.day::-webkit-scrollbar-thumb {
-    background: #888;
+::-webkit-scrollbar-thumb {
+    background: #9c9c9c;
     border-radius: 4px;
 }
-.day::-webkit-scrollbar-thumb:hover {
-    background: #555;
-}
-.current-day {
-    background-color: #99d3e7;
+::-webkit-scrollbar-thumb:hover {
+    background: #848484;
 }
 #eventModal {
     display: none;
@@ -90,7 +90,8 @@ hr {
     background-color: #fff;
     padding: 20px;
     border: 1px solid #ccc;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    width: 15%;
 }
 #eventModal h3 {
     margin-top: 0;
@@ -100,14 +101,25 @@ hr {
     margin-top: 10px;
 }
 #eventModal input {
-    width: calc(100% - 20px);
+    width: calc(100% - 10px);
     padding: 5px;
     margin-top: 5px;
     margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
 }
-#eventModal input.error {
+#eventModal textarea {
+    width: calc(100% - 10px);
+    padding: 5px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    height: 100px;
+    resize: none;
+    font-size: 15px;
+}
+#eventModal textarea.error {
     border: 2px solid red;
 }
 #eventModal button {
@@ -120,17 +132,18 @@ hr {
     transition: background-color 0.3s;
 }
 #eventModal button:hover {
-    background-color: #0056b3;
+    background-color: #005fc5;
 }
 .event {
-    background-color: #f0f0f0;
-    font-size: 10px;
+    background-color: #cdcdcd;
+    font-size: 12px;
     margin: 5px 0;
     padding: 5px;
     border-radius: 3px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    cursor: pointer;
 }
 .event-time {
     margin-right: 5px;
@@ -140,4 +153,22 @@ hr {
 .event-description {
     flex-grow: 1;
     word-break: break-word;
+}
+#colorOptions {
+    display: flex;
+    margin-bottom: 10px;
+    justify-content: space-between;
+}
+.color-option {
+    width: 20px;
+    height: 20px;
+    border-radius: 20%;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: border-color 0.3s;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+.color-option.selected {
+    border-color: #000;
 }

@@ -9,9 +9,9 @@
     <body>
         <div class="container">
             <div class="header">
-                <button id="prevMonth">Previous Month</button>
+                <button id="prevMonth">Previous month</button>
                 <h2 id="currentMonth"></h2>
-                <button id="nextMonth">Next Month</button>
+                <button id="nextMonth">Next month</button>
             </div>
             <hr />
             <div class="weekdays">
@@ -23,18 +23,40 @@
                 <div>Saturday</div>
                 <div>Sunday</div>
             </div>
-
             <div class="calendar" id="calendar"></div>
         </div>
 
         <div id="eventModal">
-            <h3>Add Event</h3>
+            <h3>Add event</h3>
             <label for="eventDescription">Description:</label>
-            <input type="text" id="eventDescription" />
+            <textarea type="text" id="eventDescription"></textarea>
             <label for="eventTime">Time (optional):</label>
             <input type="time" id="eventTime" />
-            <button id="addEvent">Add Event</button>
-            <button id="closeModal">Close</button>
+            <label for="eventColor">Choose color:</label>
+            <div id="colorOptions">
+                <span
+                    class="color-option selected"
+                    style="background-color: #d7d7d7"></span>
+                <span
+                    class="color-option"
+                    style="background-color: #f28b82"></span>
+                <span
+                    class="color-option"
+                    style="background-color: #efef55"></span>
+                <span
+                    class="color-option"
+                    style="background-color: #9cff75"></span>
+                <span
+                    class="color-option"
+                    style="background-color: #90c0ff"></span>
+                <span
+                    class="color-option"
+                    style="background-color: #ffa7e5"></span>
+            </div>
+            <div style="text-align: center">
+                <button id="addEvent">Add event</button>
+                <button id="closeModal">Close</button>
+            </div>
         </div>
 
         <script type="module" src="./src/calendar.js"></script>
