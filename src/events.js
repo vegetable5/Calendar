@@ -30,7 +30,7 @@ const deleteEvent = (event, eventEl) => {
 };
 
 const renderEvents = dayEl => {
-    events = JSON.parse(localStorage.getItem('events'));
+    events = JSON.parse(localStorage.getItem('events')) || {};
     const dayEvents = events[dayEl.dataset.key] || [];
 
     for (const event of dayEvents) {
