@@ -6,7 +6,14 @@ const closeModalBtn = document.getElementById('closeModal');
 const colorOptions = document.querySelectorAll('.color-option');
 
 let clicked = null;
-let events = JSON.parse(localStorage.getItem('events')) || {};
+
+const getEvents = () => JSON.parse(localStorage.getItem('events')) || {};
+
+const saveEvents = events => {
+    localStorage.setItem('events', JSON.stringify(events));
+};
+
+let events = getEvents();
 
 const deleteEvent = (event, eventEl) => {
     const date = eventEl.dataset.key;
@@ -26,11 +33,11 @@ const deleteEvent = (event, eventEl) => {
     }
 
     eventEl.remove();
-    localStorage.setItem('events', JSON.stringify(events));
+    saveEvents(events);
 };
 
 const renderEvents = dayEl => {
-    events = JSON.parse(localStorage.getItem('events')) || {};
+    events = getEvents();
     const dayEvents = events[dayEl.dataset.key] || [];
 
     for (const event of dayEvents) {
@@ -63,20 +70,25 @@ const comparator = (a, b) => {
     }
 };
 
-const setColor = (option = colorOptions[0]) => {
+const setSelectedColor = (option = colorOptions[0]) => {
     colorOptions.forEach(opt => opt.classList.remove('selected'));
     option.classList.add('selected');
 };
 
 colorOptions.forEach(option => {
     option.addEventListener('click', () => {
-        setColor(option);
+        setSelectedColor(option);
     });
 });
 
 const openEventModal = dayEl => {
-    eventModalEl.style.display = 'block';
     clicked = dayEl;
+
+    eventModalEl.style.display = 'block';
+    eventDescriptionEl.value = '';
+    eventTimeEl.value = '';
+    eventDescriptionEl.classList.remove('error');
+    setSelectedColor();
 };
 
 addEventBtn.addEventListener('click', () => {
@@ -89,38 +101,29 @@ addEventBtn.addEventListener('click', () => {
         return;
     }
 
-    eventDescriptionEl.classList.remove('error');
-
     if (!events[date]) {
         events[date] = [];
     }
 
-    let color = '#d7d7d7';
+    let color = colorOptions[0];
     for (const option of colorOptions) {
         if (option.classList.contains('selected')) {
-            setColor();
             color = option.style.backgroundColor;
         }
     }
 
     events[date].push({ description, time, color });
     events[date].sort((a, b) => comparator(a, b));
-
-    eventDescriptionEl.value = '';
-    eventTimeEl.value = '';
-    eventModalEl.style.display = 'none';
-    localStorage.setItem('events', JSON.stringify(events));
+    saveEvents(events);
 
     clicked.innerText = clicked.dataset.key.split('.')[0];
     renderEvents(clicked);
+
+    eventModalEl.style.display = 'none';
 });
 
 closeModalBtn.addEventListener('click', () => {
-    eventDescriptionEl.value = '';
-    eventTimeEl.value = '';
     eventModalEl.style.display = 'none';
-    setColor();
-    eventDescriptionEl.classList.remove('error');
 });
 
 export { openEventModal, renderEvents };
